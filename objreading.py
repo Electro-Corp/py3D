@@ -1,3 +1,7 @@
+"""
+this file does not work. 
+"""
+
 import pygame
 import wireframe
 import numpy as np
