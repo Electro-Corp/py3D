@@ -3,7 +3,7 @@ import wireframe
 import numpy as np
 
 class ProView:
-  """Display 3d obj's in pygame!"""
+  """Display 3d objects's in pygame!"""
   def __init__(self,width,height,title):
     self.width = width
     self.height = height
@@ -48,7 +48,7 @@ class ProView:
         elif event.type == pygame.KEYDOWN:
           if event.key in key_to_function:
             key_to_function[event.key](self)
-            print(event.key)
+            #print(event.key)
         elif event.type == pygame.MOUSEBUTTONDOWN:
           
             
@@ -69,7 +69,9 @@ class ProView:
     for wireframe in self.wireframes.values():
       if self.displayEdges:
         for edge in wireframe.edges:
-          pygame.draw.aaline(self.screen, self.edgeColor, (edge.start.x,edge.start.y),(edge.stop.x, edge.stop.y), 1)
+          #while(edge.start.y < edge in wireframe.edges):
+          pygame.draw.aaline(self.screen, self.edgeColor, (edge.start.x,edge.start.y),(edge.stop.x, edge.stop.y-1), 1)
+          
       if self.displayNodes:
         for node in wireframe.nodes:
           pygame.draw.circle(self.screen,self.nodeColor,(int(node.x),int(node.y)),self.nodeRadius,0)
@@ -94,18 +96,30 @@ class ProView:
       
       
 if __name__ == '__main__':
-  cube = wireframe.Wireframe()
+  cube = wireframe.Wireframe('normal')
+  mini = wireframe.Wireframe('cringe')
   cube_nodes = []
+  mini_nodes = [10,10,20],[10,20,10],[20,10,10]
   #file = "teapot.obj"
   #cube.read_obj()
   
   cube.addNodes(cube_nodes)
   cube.addNodes([(x ,y, z) for x in (50, 250) for y in (50, 250) for z in (50, 250)])
+  mini.addNodes(mini_nodes)
+  #mini.addNodes([x,y,z] for x in (10,50) for y in (10,50) for z in (10,50))
+  #mini.addNodes([0,0,10],[0,10,0],[10,0,0])
+  
 
   cube.addEdges([(n,n+4) for n in range(0,4)]+[(n,n+1) for n in range(0,8,2)]+[(n,n+2) for n in (0,1,4,5)])
-
+  #mini.addEdges([(n,n+2) for n in range(0,2)]+[(n,n+1) for n in range(0,4,2)]+ [(n,n+1) for n in (0,1,2,3)])
+  mini_edge_list = [10,20],[20,10],[10,20]
+  #mini.addEdges([(n,n+2) for n in range(0,2)]+[(n,n+1) for n in range(0,4,1)])
+  cube.outputEdges()
+  cube.outputnode()
   
   pv = ProView(400,300,"wireframe test")
   pv.addWireFrame('cube',cube)
+  pv.addWireFrame('mini',mini)
   pv.run()
+
   

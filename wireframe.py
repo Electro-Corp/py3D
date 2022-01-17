@@ -17,9 +17,10 @@ class Edge:
     self.stop = stop
 
 class Wireframe:
-  def __init__(self):
+  def __init__(self,type):
     self.nodes = []
     self.edges = []
+    self.type = type
 
   def addNodes(self,nodeList):
     for nodes in nodeList:
@@ -31,16 +32,18 @@ class Wireframe:
 
   def translate(self,axis, d):
     """translation"""
-    if axis in ['x','y','z']:
+    if axis in ['x','y','z'] and self.type == 'normal':
       for node in self.nodes:
         setattr(node,axis,getattr(node,axis)+d)
         
   def scale(self,(centerX,centerY),scale):
     """Scaling"""
     for node in self.nodes:
-      node.x = centerX+scale*(node.x-centerX)
-      node.y = centerY+scale*(node.y-centerY)
-      node.z *=scale
+      if self.type == 'normal':
+        
+        node.x = centerX+scale*(node.x-centerX)
+        node.y = centerY+scale*(node.y-centerY)
+        node.z *=scale
   def findCenter(self):
     """find center"""
     num_nodes = len(self.nodes)
@@ -135,10 +138,10 @@ if __name__ == "__main__":
   Wireframe.read_Obj("teapot.obj")
   cube = Wireframe()
   cube.addNodes(cube_nodes)
-  # cube.addEdges([(n,n+4) for n in range(0,4)])
-  # cube.addEdges([(n,n+1) for n in range(0,8,2)])
-  # cube.addEdges([(n,n+2) for n in (0,1,4,5)])
+  cube.addEdges([(n,n+4) for n in range(0,4)])
+  cube.addEdges([(n,n+1) for n in range(0,8,2)])
+  cube.addEdges([(n,n+2) for n in (0,1,4,5)])
     
-  # cube.outputNodes()
-  # cube.outputEdges()
+  cube.outputNodes()
+  cube.outputEdges()
 
