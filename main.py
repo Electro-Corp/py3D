@@ -32,7 +32,8 @@ class ProView:
       pygame.K_a: (lambda x: x.rotateAll('Y',  0.1)),
       pygame.K_s: (lambda x: x.rotateAll('Y', -0.1)),
       pygame.K_z: (lambda x: x.rotateAll('Z',  0.1)),
-      pygame.K_x: (lambda x: x.rotateAll('Z', -0.1))
+      pygame.K_x: (lambda x: x.rotateAll('Z', -0.1)),
+      
     }
     """Create window"""
     running = True
@@ -46,16 +47,38 @@ class ProView:
         if event.type == pygame.QUIT:
           running = False
         elif event.type == pygame.KEYDOWN:
+          
           if event.key in key_to_function:
             key_to_function[event.key](self)
             #print(event.key)
+
+          else:
+            pass
+
+
         elif event.type == pygame.MOUSEBUTTONDOWN:
           
-            
-          (mouseX, mouseY) = pygame.mouse.get_pos()
-          self.rotateAll('Z',mouseY-mouseX)
-          self.rotateAll('Y',mouseY)
-          self.rotateAll('X',mouseX)
+
+          if pygame.mouse.get_pressed() == (0,0,1):
+            print("Animation")
+            a = input("Start 1: ")
+            b = input("Start 2: ")
+            animatepos = animate(a,b)  
+            print(animatepos)
+            pos = []
+            pos.append(a)
+            pos.append(b)
+            break 
+          elif pygame.mouse.get_pressed() == (0,1,0):
+            print("animating lol")
+            self.animateself(animatepos)
+          else:
+
+            (mouseX, mouseY) = pygame.mouse.get_pos()
+            self.rotateAll('Z',mouseY-mouseX)
+            self.rotateAll('Y',mouseY)
+            self.rotateAll('X',mouseX)
+
       self.screen.fill(self.background)
       self.display()
       pygame.display.flip()
@@ -93,8 +116,22 @@ class ProView:
     for wireframe in self.wireframes.itervalues():
       center = wireframe.findCenter()
       getattr(wireframe,rotateFunction)(center,theta)
-      
-      
+  def animateself(self,poslist):
+    start = pos[0]
+    end = pos[1]
+    x = 0
+    while x != end:
+      self.translateAll('X',0.1)
+      x += 0.1 
+
+
+def animate(start,end):
+  pos = []
+  pos.append(start)
+  pos.append(end)
+
+  return([pos])   
+   
 if __name__ == '__main__':
   cube = wireframe.Wireframe('normal')
   mini = wireframe.Wireframe('cringe')
