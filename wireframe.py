@@ -76,45 +76,42 @@ class Wireframe:
       theta = math.atan2(y,x) + radians
       node.x = cx+d*math.cos(theta)
       node.y = cy+d*math.sin(theta)
-  # def readObj(self, file):
-  #   try:
+  def readObj(self, file):
+    try:
       
-  #     File_object = open(r"teapot.obj", "r")
-  #     for line in File_object:
-  #       File_object.readline()
+      File_object = open(r"teapot.obj", "r")
+      for line in File_object:
+        File_object.readline()
         
-  #     cube_nodes = [x,y,z]
-  #   except OSError:
-  #     print("File not found.")
-  #   finally:
-  #     print("Read finished with or without errors.")
-  # def read_obj(in_file):
-  #   vertices = []
-  #   faces = []
-  #   in_file = open("teapot.obj")
-  #   try:
-  #     line = 0
-  #     for k, v in in_file.readline(line+1):
-  #         if k == 'v':
-  #             cube_nodes.append(v)
-  #         elif k == 'f':
-  #             for i in v:
+      cube_nodes = [x,y,z]
+    except OSError:
+      print("File not found.")
+    finally:
+      print("Read finished with or without errors.")
+  def read_obj(in_file):
+    vertices = []
+    faces = []
+    in_file = open("teapot.obj")
+    try:
+      line = 0
+      for k, v in in_file.readline(line+1):
+          if k == 'v':
+              
+              cube_nodes.append(v)
+          elif k == 'f':
+              for i in v:
                 
-  #               cube.addEdges(i)
-  #         else:
+                cube.addEdges(i)
+          else:
             
-  #           print("epic loser fail.")
-  #         line += 1
+            print("epic loser fail.")
+          line += 1
         
-  #   except:
-  #     print("fail.")
-    # if not len(faces) or not len(vertices):
-    #     return None
+    except:
+      print("fail.")
+    if not len(faces) or not len(vertices):
+        return None
 
-    # pos = torch.tensor(vertices, dtype=torch.float)
-    # face = torch.tensor(faces, dtype=torch.long).t().contiguous()
-
-    # data = Data(pos=pos, face=face)
 
     
   #debug func
@@ -133,7 +130,7 @@ class Wireframe:
 
 
 #cube
-if __name__ == "__main__":
+if __name__ == "__wireframe__":
   cube_nodes = []
   Wireframe.read_Obj("teapot.obj")
   cube = Wireframe()
