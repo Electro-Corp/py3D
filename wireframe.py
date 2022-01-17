@@ -34,6 +34,7 @@ class Wireframe:
     if axis in ['x','y','z']:
       for node in self.nodes:
         setattr(node,axis,getattr(node,axis)+d)
+        
   def scale(self,(centerX,centerY),scale):
     """Scaling"""
     for node in self.nodes:

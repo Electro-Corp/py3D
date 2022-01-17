@@ -36,7 +36,12 @@ class ProView:
     }
     """Create window"""
     running = True
+    automove = 0
     while running:
+      if automove == 1:
+        
+        self.rotateAll('Z',-0.001)
+        self.rotateAll('Y',-0.001)
       for event in pygame.event.get():
         if event.type == pygame.QUIT:
           running = False
@@ -44,6 +49,13 @@ class ProView:
           if event.key in key_to_function:
             key_to_function[event.key](self)
             print(event.key)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+          
+            
+          (mouseX, mouseY) = pygame.mouse.get_pos()
+          self.rotateAll('Z',mouseY-mouseX)
+          self.rotateAll('Y',mouseY)
+          self.rotateAll('X',mouseX)
       self.screen.fill(self.background)
       self.display()
       pygame.display.flip()
